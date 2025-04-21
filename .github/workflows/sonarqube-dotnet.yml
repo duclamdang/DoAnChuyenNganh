@@ -1,0 +1,38 @@
+name: SonarQube Scan - ASP.NET Framework
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.3.1
+
+      - name: Setup .NET Framework Developer Pack
+        run: choco install netfx-4.7.2-devpack -y
+
+      - name: Install SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Begin SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet-sonarscanner begin /k:"doanchuyennganh" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="$env:SONAR_TOKEN"
+
+      - name: Build the solution
+        run: msbuild DoAn_LapTrinhWeb.sln
+
+      - name: End SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet-sonarscanner end /d:sonar.login="$env:SONAR_TOKEN"
