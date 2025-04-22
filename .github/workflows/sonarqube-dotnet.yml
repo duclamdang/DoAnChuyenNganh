@@ -25,7 +25,7 @@ jobs:
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
 
-    - name: Begin SonarQube analysis
+        - name: Begin SonarQube analysis
       run: |
         dotnet-sonarscanner begin /k:"doanchuyennganh" /d:sonar.host.url="http://192.168.183.132:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
