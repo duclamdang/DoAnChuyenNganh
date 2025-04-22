@@ -17,10 +17,10 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
 
-    - name: Setup .NET Framework Developer Pack
-      uses: microsoft/setup-dotnet@v1
+        - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '4.7.2'
+        dotnet-version: '6.0.x'
 
     - name: Install SonarScanner
       run: dotnet tool install --global dotnet-sonarscanner
