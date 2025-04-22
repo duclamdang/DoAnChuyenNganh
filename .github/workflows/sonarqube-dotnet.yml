@@ -26,13 +26,10 @@ jobs:
       run: dotnet tool install --global dotnet-sonarscanner
 
     - name: Begin SonarQube analysis
-      run: |
-        dotnet-sonarscanner begin /k:"doanchuyennganh" /d:sonar.host.url="http://192.168.183.132:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: dotnet-sonarscanner begin /k:"doanchuyennganh" /d:sonar.host.url="http://<VPS_IP>:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
     - name: Build the solution
-      run: |
-        msbuild DoAn_LapTrinhWeb.sln
+      run: msbuild DoAn_LapTrinhWeb.sln
 
     - name: End SonarQube analysis
-      run: |
-        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
